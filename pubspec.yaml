@@ -105,3 +105,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+
+
+flutter_native_splash:
+  android_12:
+    image: assets/logo.png
+
+    # Splash screen background color.
+    color: #F9F9F9
