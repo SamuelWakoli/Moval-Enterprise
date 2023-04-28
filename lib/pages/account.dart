@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moval/pages/edit_profile_img.dart';
+import 'package:moval/pages/edit_username.dart';
+import 'package:moval/utils/navigation.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -17,12 +20,23 @@ class _AccountPageState extends State<AccountPage> {
         centerTitle: true,
         title: const Text("Account"),
         actions: [
-          PopupMenuButton(itemBuilder: (BuildContext ctx) {
-            return [
+          PopupMenuButton(onSelected: (value) {
+            switch (value) {
+              case 0: // Edit profile image
+                nextPage(context: context, page: const EditProfileImg());
+                break;
+              case 1: // Edit username
+                nextPage(context: context, page: const EditUsername());
+                break;
+            }
+          }, itemBuilder: (BuildContext ctx) {
+            return const [
               PopupMenuItem(
+                value: 0,
                 child: Text("Edit profile image"),
               ),
               PopupMenuItem(
+                value: 1,
                 child: Text("Edit username"),
               ),
             ];
