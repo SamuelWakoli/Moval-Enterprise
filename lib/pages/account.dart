@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:moval/pages/about_us.dart';
 import 'package:moval/pages/edit_profile_img.dart';
 import 'package:moval/pages/edit_username.dart';
+import 'package:moval/pages/purchased_products.dart';
+import 'package:moval/pages/report_issue.dart';
+import 'package:moval/pages/terms_of_service.dart';
 import 'package:moval/utils/navigation.dart';
 
 class AccountPage extends StatefulWidget {
@@ -12,6 +16,10 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   double tileFontSize = 18.0;
+
+  // TODO:
+  // String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
+  // String username = FirebaseAuth.instance.currentUser!.displayName.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -73,30 +81,63 @@ class _AccountPageState extends State<AccountPage> {
                 "Purchased Products",
                 style: TextStyle(fontSize: tileFontSize),
               ),
+              leading: Icon(
+                Icons.dashboard_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const PurchasedProducts());
+              },
             ),
             ListTile(
               title: Text(
                 "Share app",
                 style: TextStyle(fontSize: tileFontSize),
               ),
+              leading: Icon(
+                Icons.share,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {},
             ),
             ListTile(
               title: Text(
                 "Report issue",
                 style: TextStyle(fontSize: tileFontSize),
               ),
+              leading: Icon(
+                Icons.report_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const ReportIssue());
+              },
             ),
             ListTile(
               title: Text(
                 "Terms of service",
                 style: TextStyle(fontSize: tileFontSize),
               ),
+              leading: Icon(
+                Icons.policy_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const TermsOfService());
+              },
             ),
             ListTile(
               title: Text(
                 "About us",
                 style: TextStyle(fontSize: tileFontSize),
               ),
+              leading: Icon(
+                Icons.info_outline_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const AboutUs());
+              },
             ),
           ],
         ),
