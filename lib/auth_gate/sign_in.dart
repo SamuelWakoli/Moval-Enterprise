@@ -161,15 +161,7 @@ class _SignInPageState extends State<SignInPage> {
                                 try {
                                   await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
-                                          email: _email, password: _password)
-                                      .whenComplete(() {
-                                    setState(() {
-                                      signInBtnLoading = false;
-                                    });
-                                    replacePage(
-                                        context: context,
-                                        page: const HomeScreen(title: "Moval"));
-                                  });
+                                          email: _email, password: _password);
                                 } on FirebaseAuthException catch (e) {
                                   setState(() {
                                     signInBtnLoading = false;
@@ -204,6 +196,15 @@ class _SignInPageState extends State<SignInPage> {
                                           ],
                                         );
                                       });
+                                }
+
+                                if (FirebaseAuth.instance.currentUser != null) {
+                                  // signed in
+                                  replacePage(
+                                      context: context,
+                                      page: const HomeScreen(
+                                        title: 'Moval',
+                                      ));
                                 }
                               }
                             },

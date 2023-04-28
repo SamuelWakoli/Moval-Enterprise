@@ -17,9 +17,20 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   double tileFontSize = 18.0;
 
-  // TODO:
+  // TODO: add username and email to the account page
   // String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
   // String username = FirebaseAuth.instance.currentUser!.displayName.toString();
+
+  /// shares data to other apps
+  _onShareData(context, text, subject) async {
+    final RenderBox box = context.findRenderObject();
+    {
+      //TODO: fix the share function
+      // await Share.share(text,
+      //     subject: subject,
+      //     sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +109,12 @@ class _AccountPageState extends State<AccountPage> {
                 Icons.share,
                 color: Theme.of(context).primaryColor,
               ),
-              onTap: () {},
+              onTap: () async {
+                _onShareData(
+                    context,
+                    "https://play.google.com/store/apps/details?id=com.moval_enterprise.moval",
+                    'Moval Enterprise App Link');
+              },
             ),
             ListTile(
               title: Text(
