@@ -3,6 +3,7 @@ import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:moval/auth_gate/forgot_pwd.dart';
+import 'package:moval/auth_gate/services.dart';
 import 'package:moval/utils/navigation.dart';
 
 import '../home_screen/home_screen.dart';
@@ -92,7 +93,7 @@ class _SignInPageState extends State<SignInPage> {
                         }
                         return null;
                       },
-                      onFieldSubmitted: (value) {
+                      onChanged: (value) {
                         _email = value;
                       },
                     ),
@@ -129,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                         }
                         return null;
                       },
-                      onFieldSubmitted: (value) async {
+                      onChanged: (value) async {
                         _password = value;
                       },
                     ),
@@ -159,6 +160,8 @@ class _SignInPageState extends State<SignInPage> {
                                   signInBtnLoading = true;
                                 });
                                 try {
+                                  print(
+                                      "----------------START SIGN IN-----------------");
                                   await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
                                           email: _email, password: _password);
@@ -227,45 +230,7 @@ class _SignInPageState extends State<SignInPage> {
                         setState(() {
                           googleSignInLoading = true;
                         });
-                        try {
-                          FirebaseAuth.instance
-                              .signInWithProvider(GoogleAuthProvider())
-                              .whenComplete(() {
-                            setState(() {
-                              googleSignInLoading = false;
-                            });
-                            replacePage(
-                                context: context,
-                                page: const HomeScreen(title: "Moval"));
-                          });
-                        } on FirebaseAuthException catch (e) {
-                          setState(() {
-                            googleSignInLoading = false;
-                          });
-                          late String message;
-
-                          if (e.code == "user-disabled") {
-                            message =
-                                "The user corresponding to the given email has been disabled";
-                          } else {
-                            message = "An error occurred.";
-                          }
-
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return AlertDialog(
-                                  content: Text(message),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(ctx);
-                                        },
-                                        child: const Text("Okay"))
-                                  ],
-                                );
-                              });
-                        }
+                        AuthService().signInWithGoogle();
                       },
                       isLoading: googleSignInLoading,
                       loadingIndicator: CircularProgressIndicator(

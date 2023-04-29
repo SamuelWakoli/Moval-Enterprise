@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:moval/auth_gate/services.dart';
 import 'package:moval/home_screen/home_screen.dart';
 import 'package:moval/utils/navigation.dart';
 
@@ -92,7 +93,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                         return null;
                       },
-                      onFieldSubmitted: (value) {
+                      onChanged: (value) {
                         _email = value;
                       },
                     ),
@@ -129,14 +130,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                         return null;
                       },
-                      onFieldSubmitted: (value) async {
+                      onChanged: (value) async {
                         _password = value;
-
-                        if (_password.length < 6) {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Your password should not be less than 6 characters")));
-                        }
                       },
                     ),
                     const SizedBox(height: 12),
@@ -173,13 +168,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         return null;
                       },
                       onFieldSubmitted: (value) async {
-                        _password2 = value;
-
                         if (_password2.length < 6) {
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text(
                                   "Your password should not be less than 6 characters")));
                         }
+                      },
+                      onChanged: (value) async {
+                        _password2 = value;
                       },
                     ),
                     const SizedBox(height: 16.0),
@@ -207,10 +203,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                         setState(() {
                                           signInBtnLoading = false;
                                         });
-                                        replacePage(
-                                            context: context,
-                                            page: const HomeScreen(
-                                                title: "Moval"));
+                                        if (FirebaseAuth.instance.currentUser !=
+                                            null) {
+                                          replacePage(
+                                              context: context,
+                                              page: const HomeScreen(
+                                                  title: "Moval"));
+                                        }
                                       });
                                     } on FirebaseAuthException catch (e) {
                                       setState(() {
@@ -278,45 +277,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         setState(() {
                           googleSignInLoading = true;
                         });
-                        try {
-                          FirebaseAuth.instance
-                              .signInWithProvider(GoogleAuthProvider())
-                              .whenComplete(() {
-                            setState(() {
-                              googleSignInLoading = false;
-                            });
-                            replacePage(
-                                context: context,
-                                page: const HomeScreen(title: "Moval"));
-                          });
-                        } on FirebaseAuthException catch (e) {
-                          setState(() {
-                            googleSignInLoading = false;
-                          });
-                          late String message;
-
-                          if (e.code == "user-disabled") {
-                            message =
-                                "The user corresponding to the given email has been disabled";
-                          } else {
-                            message = "An error occurred.";
-                          }
-
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return AlertDialog(
-                                  content: Text(message),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(ctx);
-                                        },
-                                        child: const Text("Okay"))
-                                  ],
-                                );
-                              });
-                        }
+                        AuthService().signInWithGoogle();
                       },
                       isLoading: googleSignInLoading,
                       loadingIndicator: CircularProgressIndicator(
