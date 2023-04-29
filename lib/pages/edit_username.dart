@@ -76,7 +76,13 @@ class _EditUsernameState extends State<EditUsername> {
                               });
                               FirebaseAuth.instance.currentUser!
                                   .updateDisplayName(_newUsername)
-                                  .whenComplete(() => Navigator.pop(context));
+                                  .whenComplete(() {
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("Updated username")));
+                              });
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

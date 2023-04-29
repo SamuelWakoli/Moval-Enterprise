@@ -71,6 +71,13 @@ class _EditProfileImgState extends State<EditProfileImg> {
                     : CachedNetworkImage(
                         imageUrl: userprofileUrl,
                         fit: BoxFit.fill,
+                        errorWidget: (cx, url, downloadProgress) {
+                          return Icon(
+                            Icons.account_circle_outlined,
+                            size: 120,
+                            color: Theme.of(context).primaryColor,
+                          );
+                        },
                       ),
               ),
             ),

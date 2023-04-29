@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moval/pages/help_center.dart';
 
@@ -10,6 +12,10 @@ import '../utils/navigation.dart';
 
 ListView drawerContent({required context}) {
   double menuTitleSize = 18.0;
+  String userprofileUrl =
+      FirebaseAuth.instance.currentUser!.photoURL.toString();
+  String userEmail = FirebaseAuth.instance.currentUser!.email.toString();
+  String username = FirebaseAuth.instance.currentUser!.displayName.toString();
 
   return ListView(
     children: [
@@ -44,11 +50,24 @@ ListView drawerContent({required context}) {
           leading: CircleAvatar(
             radius: 26,
             backgroundColor: Colors.white,
-            child: Image.asset("assets/logo.png"),
+            child: CachedNetworkImage(
+              imageUrl: userprofileUrl,
+              fit: BoxFit.fill,
+              errorWidget: (cx, url, downloadProgress) {
+                return Icon(
+                  Icons.account_circle_outlined,
+                  size: 36,
+                  color: Theme.of(context).primaryColor,
+                );
+              },
+            ),
           ),
           title: Text(
             "Account",
             style: TextStyle(fontSize: menuTitleSize),
+          ),
+          subtitle: Text(
+            "$userEmail\n$username",
           ),
           onTap: () => nextPage(context: context, page: const AccountPage()),
         ),
