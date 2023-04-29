@@ -14,7 +14,7 @@ Widget homePageCard({required context}) {
         child: InkWell(
           onTap: () {
             CURRENT_PRODUCT_ID = ""; // TODO: change this
-            nextPage(context: context, page: ProductDetails());
+            nextPage(context: context, page: const ProductDetails());
           },
           splashColor: Theme.of(context).primaryColor,
           child: Column(

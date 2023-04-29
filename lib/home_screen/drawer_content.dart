@@ -47,19 +47,22 @@ ListView drawerContent({required context}) {
       Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: ListTile(
-          leading: CircleAvatar(
-            radius: 26,
-            backgroundColor: Colors.white,
-            child: CachedNetworkImage(
-              imageUrl: userprofileUrl,
-              fit: BoxFit.fill,
-              errorWidget: (cx, url, downloadProgress) {
-                return Icon(
-                  Icons.account_circle_outlined,
-                  size: 36,
-                  color: Theme.of(context).primaryColor,
-                );
-              },
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: SizedBox(
+              height: 54,
+              width: 54,
+              child: CachedNetworkImage(
+                imageUrl: userprofileUrl,
+                fit: BoxFit.fill,
+                errorWidget: (cx, url, downloadProgress) {
+                  return Icon(
+                    Icons.account_circle_outlined,
+                    size: 36,
+                    color: Theme.of(context).primaryColor,
+                  );
+                },
+              ),
             ),
           ),
           title: Text(

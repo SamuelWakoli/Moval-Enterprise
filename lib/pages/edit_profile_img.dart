@@ -29,6 +29,7 @@ class _EditProfileImgState extends State<EditProfileImg> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
+      showSaveBtn = true;
     } on PlatformException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
@@ -41,6 +42,7 @@ class _EditProfileImgState extends State<EditProfileImg> {
       if (image == null) return;
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
+      showSaveBtn = true;
     } on PlatformException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
@@ -53,179 +55,183 @@ class _EditProfileImgState extends State<EditProfileImg> {
       appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 28.0),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: SizedBox(
-                height: 200,
-                width: 200,
-                child: (image != null)
-                    ? Image.file(
-                        image!,
-                        fit: BoxFit.fill,
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: userprofileUrl,
-                        fit: BoxFit.fill,
-                        errorWidget: (cx, url, downloadProgress) {
-                          return Icon(
-                            Icons.account_circle_outlined,
-                            size: 120,
-                            color: Theme.of(context).primaryColor,
-                          );
-                        },
-                      ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 28.0),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: (image != null)
+                      ? Image.file(
+                          image!,
+                          fit: BoxFit.fill,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: userprofileUrl,
+                          fit: BoxFit.fill,
+                          errorWidget: (cx, url, downloadProgress) {
+                            return Icon(
+                              Icons.account_circle_outlined,
+                              size: 120,
+                              color: Theme.of(context).primaryColor,
+                            );
+                          },
+                        ),
+                ),
               ),
-            ),
-            const SizedBox(height: 28.0),
-            const Text(
-              "Get image from:",
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(height: 14.0),
-            OutlinedButton(
-                onPressed: () {
-                  pickImageCamera();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.camera_outlined,
-                        color: Theme.of(context).primaryColor,
-                        size: 32,
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        "Camera",
-                        style: TextStyle(
+              const SizedBox(height: 28.0),
+              const Text(
+                "Get image from:",
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 14.0),
+              OutlinedButton(
+                  onPressed: () {
+                    pickImageCamera();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.camera_outlined,
                           color: Theme.of(context).primaryColor,
-                          fontSize: 22,
+                          size: 32,
                         ),
-                      )
-                    ],
-                  ),
-                )),
-            const SizedBox(height: 30),
-            OutlinedButton(
-                onPressed: () {
-                  pickImageGallery();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.image_outlined,
-                        color: Theme.of(context).primaryColor,
-                        size: 32,
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        "Gallery",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 22,
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-            SizedBox(
-              height: 30,
-            ),
-            showSaveBtn
-                ? OutlinedButton(
-                    onPressed: () async {
-                      if (image == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Please select an image to be saved"),
+                        SizedBox(width: 20),
+                        Text(
+                          "Camera",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 22,
                           ),
-                        );
-                      } else {
-                        String photoURL = "";
+                        )
+                      ],
+                    ),
+                  )),
+              const SizedBox(height: 30),
+              OutlinedButton(
+                  onPressed: () {
+                    pickImageGallery();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.image_outlined,
+                          color: Theme.of(context).primaryColor,
+                          size: 32,
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          "Gallery",
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 22,
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+              SizedBox(
+                height: 30,
+              ),
+              showSaveBtn
+                  ? OutlinedButton(
+                      onPressed: () async {
+                        if (image == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text("Please select an image to be saved"),
+                            ),
+                          );
+                        } else {
+                          String photoURL = "";
 
-                        setState(() {
-                          loading = true;
-                        });
+                          setState(() {
+                            loading = true;
+                          });
 
-                        await FirebaseStorage.instance
-                            .ref("users/$userEmail")
-                            .child("ProfilePhoto.png")
-                            .putFile(image!)
-                            .then((snapshot) async {
-                          photoURL = await snapshot.ref.getDownloadURL();
-                        }).whenComplete(() async {
-                          if (photoURL != "") {
-                            await FirebaseAuth.instance.currentUser!
-                                .updatePhotoURL(photoURL)
-                                .whenComplete(() {
+                          await FirebaseStorage.instance
+                              .ref("users/$userEmail")
+                              .child("ProfilePhoto.png")
+                              .putFile(image!)
+                              .then((snapshot) async {
+                            photoURL = await snapshot.ref.getDownloadURL();
+                          }).whenComplete(() async {
+                            if (photoURL != "") {
+                              await FirebaseAuth.instance.currentUser!
+                                  .updatePhotoURL(photoURL)
+                                  .whenComplete(() {
+                                setState(() {
+                                  loading = false;
+                                });
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Profile picture saved successfully"),
+                                  ),
+                                );
+                                Navigator.of(context)
+                                    .popUntil((route) => route.isFirst);
+                              });
+                            } else {
                               setState(() {
                                 loading = false;
                               });
-
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(
-                                      "Profile picture saved successfully"),
+                                      "Please ensure you have a well set internet connection and try again"),
                                 ),
                               );
-                              Navigator.of(context).pop();
-                            });
-                          } else {
-                            setState(() {
-                              loading = false;
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    "Please ensure you have a well set internet connection and try again"),
+                            }
+                          });
+                        }
+                      },
+                      child: loading
+                          ? Center(
+                              child: SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Theme.of(context).primaryColor,
                               ),
-                            );
-                          }
-                        });
-                      }
-                    },
-                    child: loading
-                        ? Center(
-                            child: SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ))
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.save,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 32,
-                                ),
-                                SizedBox(width: 20),
-                                Text(
-                                  "Save",
-                                  style: TextStyle(
+                            ))
+                          : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.save,
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 22,
+                                    size: 32,
                                   ),
-                                )
-                              ],
-                            ),
-                          ))
-                : SizedBox(),
-          ],
+                                  SizedBox(width: 20),
+                                  Text(
+                                    "Save",
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 22,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ))
+                  : SizedBox(),
+            ],
+          ),
         ),
       ),
     );
