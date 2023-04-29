@@ -66,137 +66,147 @@ class _AccountPageState extends State<AccountPage> {
           })
         ],
       ),
-      body: ListView(
-        children: [
-          const SizedBox(height: 28.0),
-          CachedNetworkImage(
-            imageUrl: userprofileUrl,
-            fit: BoxFit.fill,
-            errorWidget: (cx, url, downloadProgress) {
-              return Icon(
-                Icons.account_circle_outlined,
-                size: 120,
-                color: Theme.of(context).primaryColor,
-              );
-            },
-          ),
-          const SizedBox(height: 14.0),
-          ListTile(
-            title: Text(
-              "$username\n$userEmail",
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(height: 18.0),
-          ListTile(
-            title: Text(
-              "Purchased Products",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.dashboard_outlined,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () {
-              nextPage(context: context, page: const PurchasedProducts());
-            },
-          ),
-          ListTile(
-            title: Text(
-              "Share app",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.share,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () async {
-              _onShareData(
-                  context,
-                  "https://play.google.com/store/apps/details?id=com.moval_enterprise.moval",
-                  'Moval Enterprise App Link');
-            },
-          ),
-          ListTile(
-            title: Text(
-              "Report issue",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.report_outlined,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () {
-              nextPage(context: context, page: const ReportIssue());
-            },
-          ),
-          ListTile(
-            title: Text(
-              "Terms of service",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.policy_outlined,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () {
-              nextPage(context: context, page: const TermsOfService());
-            },
-          ),
-          ListTile(
-            title: Text(
-              "About us",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.info_outline_rounded,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () {
-              nextPage(context: context, page: const AboutUs());
-            },
-          ),
-          ListTile(
-            title: Text(
-              "Sign out",
-              style: TextStyle(fontSize: tileFontSize),
-            ),
-            leading: Icon(
-              Icons.logout,
-              color: Theme.of(context).primaryColor,
-            ),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return AlertDialog(
-                      icon: Icon(
-                        Icons.logout,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      title: const Text("Sign Out"),
-                      content: const Text("Are you sure you want to sign out?"),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(ctx);
-                              FirebaseAuth.instance.signOut();
-                              Navigator.popUntil(
-                                  context, (route) => route.isFirst);
-                            },
-                            child: const Text("Okay")),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(ctx);
-                            },
-                            child: const Text("Cancel")),
-                      ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 28.0),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: SizedBox(
+                height: 200,
+                width: 200,
+                child: CachedNetworkImage(
+                  imageUrl: userprofileUrl,
+                  fit: BoxFit.fill,
+                  errorWidget: (cx, url, downloadProgress) {
+                    return Icon(
+                      Icons.account_circle_outlined,
+                      size: 120,
+                      color: Theme.of(context).primaryColor,
                     );
-                  });
-            },
-          ),
-        ],
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 14.0),
+            ListTile(
+              title: Text(
+                "$username\n$userEmail",
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 18.0),
+            ListTile(
+              title: Text(
+                "Purchased Products",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.dashboard_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const PurchasedProducts());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Share app",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.share,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () async {
+                _onShareData(
+                    context,
+                    "https://play.google.com/store/apps/details?id=com.moval_enterprise.moval",
+                    'Moval Enterprise App Link');
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Report issue",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.report_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const ReportIssue());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Terms of service",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.policy_outlined,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const TermsOfService());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "About us",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.info_outline_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                nextPage(context: context, page: const AboutUs());
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Sign out",
+                style: TextStyle(fontSize: tileFontSize),
+              ),
+              leading: Icon(
+                Icons.logout,
+                color: Theme.of(context).primaryColor,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        icon: Icon(
+                          Icons.logout,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        title: const Text("Sign Out"),
+                        content:
+                            const Text("Are you sure you want to sign out?"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(ctx);
+                                FirebaseAuth.instance.signOut();
+                                Navigator.popUntil(
+                                    context, (route) => route.isFirst);
+                              },
+                              child: const Text("Okay")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(ctx);
+                              },
+                              child: const Text("Cancel")),
+                        ],
+                      );
+                    });
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
