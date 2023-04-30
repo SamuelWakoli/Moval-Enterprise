@@ -1,8 +1,10 @@
+import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:moval/firebase_options.dart';
 
 import 'auth_gate/auth_gate.dart';
+import 'theming.dart';
 
 /// started on 23Apr 18:38 2023
 Future<void> main() async {
@@ -11,7 +13,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(EasyDynamicThemeWidget(child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -27,10 +29,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Colors.green,
-        useMaterial3: true,
-      ),
+      theme: lightThemeData,
+      darkTheme: darkThemeData,
+      themeMode: EasyDynamicTheme.of(context).themeMode,
       home: const AuthGate(),
       // home: const HomeScreen(title: 'Moval'),
     );
