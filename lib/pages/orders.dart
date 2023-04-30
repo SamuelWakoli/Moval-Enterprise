@@ -27,9 +27,9 @@ class _OrdersPageState extends State<OrdersPage> {
               ),
             ),
             //delivered || awaiting delivery
-            title: Text("Delivered\nProduct Name"),
-            subtitle:
-                Text("Quantity: 1\nAmount paid: Ksh. 2000\nDate: 12/12/2022"),
+            title: Text("Product Name"),
+            subtitle: Text(
+                "Quantity: 1\nAmount paid: Ksh. 2000\nDate: 12/12/2022\nStatus: Delivered"),
           ),
         ),
       ),

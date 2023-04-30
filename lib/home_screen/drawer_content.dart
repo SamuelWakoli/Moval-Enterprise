@@ -6,7 +6,6 @@ import 'package:moval/pages/help_center.dart';
 import '../pages/account.dart';
 import '../pages/cart.dart';
 import '../pages/orders.dart';
-import '../pages/quiz_answers.dart';
 import '../pages/suggestion.dart';
 import '../utils/navigation.dart';
 
@@ -98,18 +97,6 @@ ListView drawerContent({required context}) {
           style: TextStyle(fontSize: menuTitleSize),
         ),
         onTap: () => nextPage(context: context, page: const OrdersPage()),
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.question_answer_outlined,
-          color: Theme.of(context).primaryColor,
-          size: 24,
-        ),
-        title: Text(
-          "Q&A",
-          style: TextStyle(fontSize: menuTitleSize),
-        ),
-        onTap: () => nextPage(context: context, page: const QuizAnswers()),
       ),
       ListTile(
         leading: Icon(

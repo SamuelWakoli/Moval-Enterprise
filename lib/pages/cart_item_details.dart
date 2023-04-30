@@ -23,7 +23,7 @@ class _CartItemDetailsState extends State<CartItemDetails> {
                   context: context,
                   builder: (ctx) {
                     return AlertDialog(
-                      icon: Icon(Icons.remove_shopping_cart_outlined,
+                      icon: const Icon(Icons.remove_shopping_cart_outlined,
                           color: Colors.red),
                       title: Text("Remove from Cart"),
                       content: Text("You are about to remove \$itemName "
@@ -88,21 +88,17 @@ class _CartItemDetailsState extends State<CartItemDetails> {
               style: TextStyle(fontSize: 22),
             ),
           ),
-          Row(
-            children: [
-              SizedBox(width: 10),
-              Text(
-                "Quaintity:",
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0),
+            child: Text.rich(TextSpan(
+                text: "Quaintity: ",
                 style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(width: 10),
-              IconButton(onPressed: () {}, icon: Icon(Icons.remove)),
-              Text(
-                "1",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-            ],
+                children: [
+                  TextSpan(
+                    text: "1",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ])),
           ),
           SizedBox(
             width: 10,

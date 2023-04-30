@@ -11,9 +11,8 @@ class _ReportIssueState extends State<ReportIssue> {
   String? _issue;
   bool loading = false;
 
-  InputBorder textFieldBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10.0),
-  );
+  InputBorder textFieldBorder = const OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.transparent));
 
   sendIssue() {
     if (_globalKey.currentState!.validate()) {
@@ -62,9 +61,12 @@ class _ReportIssueState extends State<ReportIssue> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Email required';
+                          return 'Cannot send empty issue';
                         }
                         return null;
+                      },
+                      onChanged: (value) {
+                        _issue = value;
                       },
                       onFieldSubmitted: (value) {
                         _issue = value;
